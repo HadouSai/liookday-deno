@@ -1,10 +1,19 @@
-import { Application, Router, RouterContext } from "https://deno.land/x/oak@v6.0.1/mod.ts";
-import { applyGraphQL, gql, GQLError } from "https://deno.land/x/oak_graphql/mod.ts";
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import {
+  Application,
+  Router,
+  RouterContext,
+} from "https://deno.land/x/oak@v6.0.1/mod.ts";
+import {
+  applyGraphQL,
+  gql,
+  GQLError,
+} from "https://deno.land/x/oak_graphql/mod.ts";
+import * as flags from "https://deno.land/std/flags/mod.ts";
 
 const { args } = Deno;
-const PUERTO_DEFAULT = 8000;
-const puerto = parse(args).port;
+const DEFAULT_PORT = 8080;
+const argPort = flags.parse(args).port;
+const port = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const app = new Application();
 
@@ -49,8 +58,8 @@ const resolvers = {
   Query: {
     getUser: (parent: any, { id }: any, context: any, info: any) => {
       console.log("id", id, context);
-      if(context.user === "Aaron") {
-        throw new GQLError({ type: "auth error in context" })
+      if (context.user === "Aaron") {
+        throw new GQLError({ type: "auth error in context" });
       }
       return {
         firstName: "wooseok",
@@ -59,7 +68,12 @@ const resolvers = {
     },
   },
   Mutation: {
-    setUser: (parent: any, { input: { firstName, lastName } }: any, context: any, info: any) => {
+    setUser: (
+      parent: any,
+      { input: { firstName, lastName } }: any,
+      context: any,
+      info: any,
+    ) => {
       console.log("input:", firstName, lastName);
       return {
         done: true,
@@ -74,11 +88,10 @@ const GraphQLService = await applyGraphQL<Router>({
   resolvers: resolvers,
   context: (ctx: RouterContext) => {
     return { user: "Aaron" };
-  }
-})
-
+  },
+});
 
 app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log("Server start at http://localhost:8080");
-await app.listen({ port: puerto });
+await app.listen({ port });
