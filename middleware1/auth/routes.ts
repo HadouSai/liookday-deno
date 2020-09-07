@@ -1,5 +1,5 @@
 import { Context } from "https://deno.land/x/oak@v6.0.2/context.ts";
-import RESOLVER from "../auth/resolvers.ts";
+import RESOLVER from "./resolvers.ts";
 
 /* export const login = async (ctx: Context) => {
   const value = await ctx.request.body().value;
