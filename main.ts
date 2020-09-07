@@ -33,7 +33,15 @@ app.use(async (ctx, next) => {
 router
   .post("/login", async (ctx: Context) => {
     const value = await ctx.request.body().value;
-    const succesfull = await RESOLVER.login(value);
+    //const succesfull = await RESOLVER.login(value);
+    console.log(value);
+    const succesfull = {
+      error: {
+        type: "Autentification Failed",
+        detail: "User doesn't exist!",
+        status: 404,
+      },
+    };
 
     if (succesfull.error) {
       ctx.response.status = succesfull.error.status;
@@ -42,9 +50,9 @@ router
       };
     } else {
       ctx.response.status = 200;
-      ctx.response.body = {
+      /*       ctx.response.body = {
         token: succesfull.token,
-      };
+      }; */
     }
   });
 //.post("/signin", sigIn);
