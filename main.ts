@@ -35,7 +35,7 @@ router
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+//app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log(`Server start at ${DEFAULT_HOST}:${port}`);
 await app.listen({ port });
