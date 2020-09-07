@@ -2,19 +2,20 @@ import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
-//import { login, sigIn } from "./middleware/auth/routes.ts";
+import { login, sigIn } from "./middleware/auth/routes.ts";
+
+import RESOLVER from "./middleware/auth/resolvers.ts";
 
 const env = config();
 const { args } = Deno;
 const DEFAULT_PORT = 8080;
 const DEFAULT_HOST = env.DEFAULT_HOST || "http://localhost";
-const argPort = parse(args).port;
+const argPort = flags.parse(args).port;
 const port = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const app = new Application();
-//const router = new Router();
+const router = new Router();
 
 /* app.use(async (ctx, next) => {
   await next();
@@ -29,14 +30,29 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 }); */
 
-/* router
-  .post("/login", login)
-  .post("/signin", sigIn);
+router
+  .post("/login", async (ctx: Context) => {
+    const value = await ctx.request.body().value;
+    const succesfull = await RESOLVER.login(value);
+
+    if (succesfull.error) {
+      ctx.response.status = succesfull.error.status;
+      ctx.response.body = {
+        ...succesfull,
+      };
+    } else {
+      ctx.response.status = 200;
+      ctx.response.body = {
+        token: succesfull.token,
+      };
+    }
+  });
+//.post("/signin", sigIn);
 
 app.use(router.routes());
-app.use(router.allowedMethods()); */
+app.use(router.allowedMethods());
 
-app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+//app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log(`Server start at ${DEFAULT_HOST}:${port}`);
 await app.listen({ port });
