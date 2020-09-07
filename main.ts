@@ -3,7 +3,7 @@ import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
-import { login, sigIn } from "./middleware1/auth/routes.ts";
+import { login, sigIn } from "./middleware/auth/routes.ts";
 
 const env = config();
 const { args } = Deno;
@@ -29,7 +29,27 @@ app.use(async (ctx, next) => {
 }); */
 
 router
-  .post("/login", login);
+  .post("/login", async (ctx: Context) => {
+    const value = await ctx.request.body().value;
+    //const succesfull = await RESOLVER.login(value);
+    console.log(value);
+    const succesfull = {
+      error: {
+        type: "Autentification Failed",
+        detail: "User doesn't exist!",
+        status: 404,
+      },
+    };
+
+    if (succesfull.error) {
+      ctx.response.status = succesfull.error.status;
+      ctx.response.body = {
+        ...succesfull,
+      };
+    } else {
+      ctx.response.status = 200;
+    }
+  });
 //.post("/signin", sigIn);
 
 app.use(router.routes());
