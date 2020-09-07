@@ -2,6 +2,7 @@ import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
 //import { login, sigIn } from "./middleware/auth/routes.ts";
 
@@ -9,7 +10,7 @@ const env = config();
 const { args } = Deno;
 const DEFAULT_PORT = 8080;
 const DEFAULT_HOST = env.DEFAULT_HOST || "http://localhost";
-const argPort = flags.parse(args).port;
+const argPort = parse(args).port;
 const port = argPort ? Number(argPort) : DEFAULT_PORT;
 
 const app = new Application();
