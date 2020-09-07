@@ -17,7 +17,7 @@ import RESOLVER from "./resolvers.ts";
     };
   }
 }; */
-export async function login(ctx: Context) {
+export const login = async (ctx: Context) => {
   const value = await ctx.request.body().value;
   //const succesfull = await RESOLVER.login(value);
   console.log(value);
@@ -37,7 +37,7 @@ export async function login(ctx: Context) {
   } else {
     ctx.response.status = 200;
   }
-}
+};
 
 export const sigIn = (ctx: Context) => {
   ctx.response.body = "SigIn Success";
