@@ -3,7 +3,7 @@ import { config } from "https://deno.land/x/dotenv/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
-import { login, sigIn } from "middleware/auth/routes.ts";
+import { login, sigIn } from "./middleware/auth/routes.ts";
 
 const env = config();
 const { args } = Deno;

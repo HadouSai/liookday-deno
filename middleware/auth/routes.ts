@@ -36,9 +36,6 @@ export const login = async (ctx: Context) => {
     };
   } else {
     ctx.response.status = 200;
-    /*       ctx.response.body = {
-      token: succesfull.token,
-    }; */
   }
 };
 
