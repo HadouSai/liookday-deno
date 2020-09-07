@@ -28,14 +28,14 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 }); */
 
-router
+/* router
   .post("/login", login)
   .post("/signin", sigIn);
 
 app.use(router.routes());
-app.use(router.allowedMethods());
+app.use(router.allowedMethods()); */
 
-//app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log(`Server start at ${DEFAULT_HOST}:${port}`);
 await app.listen({ port });
