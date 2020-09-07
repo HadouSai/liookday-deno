@@ -17,8 +17,8 @@ import RESOLVER from "./resolvers.ts";
     };
   }
 }; */
-export const login = async (context: Context) => {
-  const value = await context.request.body().value;
+export const login = async (ctx: Context) => {
+  const value = await ctx.request.body().value;
   //const succesfull = await RESOLVER.login(value);
   console.log(value);
   const succesfull = {
@@ -30,12 +30,12 @@ export const login = async (context: Context) => {
   };
 
   if (succesfull.error) {
-    context.response.status = succesfull.error.status;
-    context.response.body = {
+    ctx.response.status = succesfull.error.status;
+    ctx.response.body = {
       ...succesfull,
     };
   } else {
-    context.response.status = 200;
+    ctx.response.status = 200;
   }
 };
 

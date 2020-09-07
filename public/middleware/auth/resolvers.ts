@@ -1,8 +1,8 @@
-import db from "../../config/database.ts";
-import validation from "../../validations/validate-login.ts";
-import { LoginUser, User } from "../../login.interface.ts";
-import HASH from "../../utils/hash-password.ts";
-import TOKEN from "../../utils/token.ts";
+import db from "../../../config/database.ts";
+import validation from "../../../validations/validate-login.ts";
+import { LoginUser, User } from "../../../login.interface.ts";
+import HASH from "../../../utils/hash-password.ts";
+import TOKEN from "../../../utils/token.ts";
 
 const usersDb = db.collection<User>("users");
 const tokensUsed = db.collection("tokensUsed");
