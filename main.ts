@@ -30,16 +30,8 @@ app.use(async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 }); */
 
-app.use(
-  oakCors({
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-    allowedHeaders: ["Content-Type", "Authorization"],
-    methods: ["POST", "GET"],
-  }),
-);
-
 router
-  .post("/login", async (ctx) => await login(ctx));
+  .post("/login", login);
 //.post("/signin", sigIn);
 
 app.use(router.routes());
