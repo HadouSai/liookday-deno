@@ -1,5 +1,6 @@
 import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
@@ -33,6 +34,7 @@ router
   .post("/login", async (ctx) => await login(ctx));
 //.post("/signin", sigIn);
 
+app.use(oakCors()); // Enable CORS for All Routes
 app.use(router.routes());
 app.use(router.allowedMethods());
 
