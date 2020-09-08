@@ -39,8 +39,20 @@ export const login = async (ctx: Context) => {
   } */
 };
 
-export function test() {
+export function test(ctx: any) {
   console.log("TESST");
+  const succesfull = {
+    error: {
+      type: "Autentification Failed",
+      detail: "User doesn't exist!",
+      status: 404,
+    },
+  };
+
+  ctx.response.status = succesfull.error.status;
+  ctx.response.body = {
+    ...succesfull,
+  };
 }
 
 export const sigIn = (ctx: Context) => {
