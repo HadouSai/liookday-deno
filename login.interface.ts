@@ -1,12 +1,12 @@
 export interface User {
-  _id: Oid;
+  _id?: Oid;
   username?: string;
   email?: string;
   password: string;
   emailConfirmation: false;
   userAccountStatus: "active";
-  created_at: string;
-  updated_at?: string;
+  created_at: number;
+  updated_at: number;
   loginTrys: number;
   userImg?: string;
 }
@@ -18,6 +18,11 @@ export interface Oid {
 export interface LoginUser {
   email: string;
   password: string;
+}
+
+export interface SingInUser extends LoginUser {
+  username: string;
+  userImg?: string;
 }
 
 export interface context {

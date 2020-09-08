@@ -1,6 +1,6 @@
 import db from "../../../config/database.ts";
 import validation from "../../../validations/validate-login.ts";
-import { LoginUser, User } from "../../../login.interface.ts";
+import { LoginUser, User, SingInUser } from "../../../login.interface.ts";
 import HASH from "../../../utils/hash-password.ts";
 import TOKEN from "../../../utils/token.ts";
 
@@ -14,9 +14,9 @@ export default {
     if (error) {
       return { error };
     }
-    console.log("aca");
+
     const user = await usersDb.findOne({ email: value.email });
-    console.log("pasE!");
+
     if (!user) {
       return {
         error: {
@@ -44,6 +44,76 @@ export default {
       };
     }
 
-    return { token: await TOKEN.generateToken(user._id.$oid), error: null };
+    usersDb.updateOne(
+      { _id: user._id },
+      { ...user, loginTrys: 0 },
+    );
+
+    return {
+      token: await TOKEN.generateToken(user._id.$oid),
+      error: null,
+      message: "Login succesfull",
+    };
+  },
+  async signIn(value: SingInUser) {
+    const error = validation.validateSingIn(value);
+
+    if (error) {
+      return { error };
+    }
+
+    const user = await usersDb.findOne({ email: value.email });
+
+    if (user) {
+      return {
+        error: {
+          type: "Registration Failed",
+          detail: "User already exists!",
+          status: 404,
+        },
+      };
+    }
+
+    const passwordEncrypted = await HASH.bCrypt(value.password);
+
+    if (!passwordEncrypted) {
+      return {
+        error: {
+          type: "Registration Failed",
+          detail: "Password couldn't be created!",
+          status: 400,
+        },
+      };
+    }
+
+    const actualTime = new Date().getTime();
+
+    const userReady = await usersDb.insertOne({
+      username: value.username,
+      email: value.email,
+      password: passwordEncrypted,
+      emailConfirmation: false,
+      userAccountStatus: "active",
+      created_at: actualTime,
+      updated_at: actualTime,
+      loginTrys: 0,
+      userImg: "",
+    });
+
+    if (!userReady) {
+      return {
+        error: {
+          type: "Registration Failed",
+          detail: "User couldn't be created!",
+          status: 400,
+        },
+      };
+    }
+
+    return {
+      token: await TOKEN.generateToken(userReady.$oid),
+      error: null,
+      message: "User created succesfull",
+    };
   },
 };

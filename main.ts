@@ -17,13 +17,13 @@ const port = argPort ? Number(argPort) : DEFAULT_PORT;
 const app = new Application();
 const router = new Router();
 
-/* app.use(async (ctx, next) => {
+app.use(async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
 });
 
-app.use(async (ctx, next) => {
+/*app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
@@ -32,12 +32,12 @@ app.use(async (ctx, next) => {
 
 router
   .post("/login", login)
-  .post("/signin", sigIn);
+  .post("/singin", sigIn);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+//app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log(`Server start at ${DEFAULT_HOST}:${port}`);
 await app.listen({ port });
