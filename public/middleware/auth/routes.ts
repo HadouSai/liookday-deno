@@ -18,6 +18,6 @@ export const login = async (ctx: any) => {
   }
 };
 
-/* export const sigIn = (ctx: Context) => {
+export const sigIn = (ctx: any) => {
   ctx.response.body = "SigIn Success";
-}; */
+};
