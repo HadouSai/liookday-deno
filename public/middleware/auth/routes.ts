@@ -1,5 +1,5 @@
-import { Context } from "https://deno.land/x/oak@v6.0.2/context.ts";
 import RESOLVER from "./resolvers.ts";
+import { RouterContext } from "https://deno.land/x/oak@v6.0.2/router.ts";
 
 /* export const login = async (ctx: Context) => {
   const value = await ctx.request.body().value;
@@ -17,11 +17,11 @@ import RESOLVER from "./resolvers.ts";
     };
   }
 }; */
-export const login = async (ctx: Context) => {
+export const login = async (ctx: RouterContext) => {
   const value = await ctx.request.body().value;
   //const succesfull = await RESOLVER.login(value);
   console.log(value);
-  /*   const succesfull = {
+  const succesfull = {
     error: {
       type: "Autentification Failed",
       detail: "User doesn't exist!",
@@ -36,25 +36,9 @@ export const login = async (ctx: Context) => {
     };
   } else {
     ctx.response.status = 200;
-  } */
+  }
 };
 
-export function test(ctx: any) {
-  console.log("TESST");
-  const succesfull = {
-    error: {
-      type: "Autentification Failed",
-      detail: "User doesn't exist!",
-      status: 404,
-    },
-  };
-
-  ctx.response.status = succesfull.error.status;
-  ctx.response.body = {
-    ...succesfull,
-  };
-}
-
-export const sigIn = (ctx: Context) => {
+/* export const sigIn = (ctx: Context) => {
   ctx.response.body = "SigIn Success";
-};
+}; */
