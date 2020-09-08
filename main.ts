@@ -30,7 +30,7 @@ app.use(async (ctx, next) => {
 }); */
 
 router
-  .post("/login", login);
+  .post("/login", async (ctx) => await login(ctx));
 //.post("/signin", sigIn);
 
 app.use(router.routes());
