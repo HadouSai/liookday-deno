@@ -21,7 +21,7 @@ export const login = async (ctx: Context) => {
   const value = await ctx.request.body().value;
   //const succesfull = await RESOLVER.login(value);
   console.log(value);
-  const succesfull = {
+  /*   const succesfull = {
     error: {
       type: "Autentification Failed",
       detail: "User doesn't exist!",
@@ -36,7 +36,7 @@ export const login = async (ctx: Context) => {
     };
   } else {
     ctx.response.status = 200;
-  }
+  } */
 };
 
 export const sigIn = (ctx: Context) => {
