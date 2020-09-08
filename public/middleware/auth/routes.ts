@@ -17,7 +17,7 @@ import { RouterContext } from "https://deno.land/x/oak@v6.0.2/router.ts";
     };
   }
 }; */
-export const login = async (ctx: RouterContext) => {
+export const login = async (ctx: any) => {
   const value = await ctx.request.body().value;
   //const succesfull = await RESOLVER.login(value);
   console.log(value);
