@@ -39,6 +39,10 @@ export const login = async (ctx: Context) => {
   } */
 };
 
+export function test() {
+  console.log("TESST");
+}
+
 export const sigIn = (ctx: Context) => {
   ctx.response.body = "SigIn Success";
 };
