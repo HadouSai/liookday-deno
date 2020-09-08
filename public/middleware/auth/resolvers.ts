@@ -14,9 +14,9 @@ export default {
     if (error) {
       return { error };
     }
-
+    console.log("aca");
     const user = await usersDb.findOne({ email: value.email });
-
+    console.log("pasE!");
     if (!user) {
       return {
         error: {
