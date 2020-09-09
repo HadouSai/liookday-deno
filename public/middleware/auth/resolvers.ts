@@ -55,7 +55,11 @@ export default {
     );
 
     return {
-      token: await TOKEN.generateToken(user._id.$oid),
+      data: {
+        token: await TOKEN.generateToken(user._id.$oid),
+        username: user.username,
+        userImg: user.userImg,
+      },
       error: null,
       message: "Login succesfull",
     };
@@ -116,7 +120,11 @@ export default {
     }
 
     return {
-      token: await TOKEN.generateToken(userReady.$oid),
+      data: {
+        token: await TOKEN.generateToken(userReady.$oid),
+        username: value.username,
+        userImg: value.userImg,
+      },
       error: null,
       message: "User created succesfull",
     };

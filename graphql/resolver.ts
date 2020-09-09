@@ -10,20 +10,4 @@ export default {
   async getUsers() {
     return await usersDb.find();
   },
-  //verificar en cada cosa que no este el token en la white list
-  async logOut(token: string) {
-    if (!token) {
-      return "Token not Found";
-    }
-
-    const IsValidToken = Token.validateToken(token);
-
-    tokensUsed.insertOne({ token });
-
-    if (!IsValidToken) {
-      return false;
-    }
-
-    return "Succesfull logout";
-  },
 };

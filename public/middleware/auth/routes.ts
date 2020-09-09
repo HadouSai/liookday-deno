@@ -13,7 +13,7 @@ export const login = async (ctx: any) => {
   } else {
     ctx.response.status = 200;
     ctx.response.body = {
-      token: succesfull.token,
+      token: succesfull.data.token,
     };
   }
 };
@@ -30,7 +30,7 @@ export const sigIn = async (ctx: any) => {
   } else {
     ctx.response.status = 200;
     ctx.response.body = {
-      token: succesfull.token,
+      token: succesfull.data.token,
     };
   }
 };

@@ -22,10 +22,8 @@ export default {
 
     return await makeJwt({ key, header, payload });
   },
-  //voy aca
 
   async validateToken(jwt: any) {
-    const r = (await validateJwt({ jwt, key, algorithm: [] })).isValid;
-    return true;
+    return (await validateJwt({ jwt, key, algorithm: "HS256" })).isValid;
   },
 };

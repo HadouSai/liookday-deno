@@ -1,6 +1,5 @@
 import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
-import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
@@ -23,12 +22,12 @@ app.use(async (ctx, next) => {
   console.log(`${ctx.request.method} ${ctx.request.url} - ${rt}`);
 });
 
-/*app.use(async (ctx, next) => {
+app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
   const ms = Date.now() - start;
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
-}); */
+});
 
 router
   .post("/login", login)
@@ -38,7 +37,7 @@ router
 app.use(router.routes());
 app.use(router.allowedMethods());
 
-//app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
+app.use(GraphQLService.routes(), GraphQLService.allowedMethods());
 
 console.log(`Server start at ${DEFAULT_HOST}:${port}`);
 await app.listen({ port });
