@@ -34,3 +34,20 @@ export const sigIn = async (ctx: any) => {
     };
   }
 };
+
+export const logOut = async (ctx: any) => {
+  const dataValue = await ctx.request.body().value;
+  const succesfull = await RESOLVER.logOut(dataValue);
+
+  if (succesfull.error) {
+    ctx.response.status = succesfull.status;
+    ctx.response.body = {
+      ...succesfull,
+    };
+  } else {
+    ctx.response.status = 200;
+    ctx.response.body = {
+      msg: succesfull.message,
+    };
+  }
+};

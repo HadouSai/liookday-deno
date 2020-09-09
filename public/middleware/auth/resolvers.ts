@@ -1,6 +1,11 @@
 import db from "../../../config/database.ts";
 import validation from "../../../validations/validate-login.ts";
-import { LoginUser, User, SingInUser } from "../../../login.interface.ts";
+import {
+  LoginUser,
+  User,
+  SingInUser,
+  LogOut,
+} from "../../../login.interface.ts";
 import HASH from "../../../utils/hash-password.ts";
 import TOKEN from "../../../utils/token.ts";
 
@@ -114,6 +119,14 @@ export default {
       token: await TOKEN.generateToken(userReady.$oid),
       error: null,
       message: "User created succesfull",
+    };
+  },
+  async logOut(value: LogOut) {
+    console.log(value);
+    return {
+      error: null,
+      status: 400,
+      message: "LogOut succesfull",
     };
   },
 };

@@ -25,6 +25,10 @@ export interface SingInUser extends LoginUser {
   userImg?: string;
 }
 
+export interface LogOut {
+  token: string;
+}
+
 export interface context {
   type: any;
   value: any;

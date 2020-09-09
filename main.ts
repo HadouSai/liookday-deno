@@ -5,7 +5,7 @@ import { oakCors } from "https://deno.land/x/cors/mod.ts";
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
 
-import { login, sigIn } from "./public/middleware/auth/routes.ts";
+import { login, sigIn, logOut } from "./public/middleware/auth/routes.ts";
 
 const env = config();
 const { args } = Deno;
@@ -32,7 +32,8 @@ app.use(async (ctx, next) => {
 
 router
   .post("/login", login)
-  .post("/singin", sigIn);
+  .post("/singin", sigIn)
+  .post("/logout", logOut);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
