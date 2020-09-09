@@ -1,5 +1,6 @@
 import { Application, Router, Context } from "https://deno.land/x/oak/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
+import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 import * as flags from "https://deno.land/std/flags/mod.ts";
 import GraphQLService from "./graphql/service.ts";
@@ -34,6 +35,7 @@ router
   .post("/singin", sigIn)
   .post("/logout", logOut);
 
+app.use(oakCors());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
